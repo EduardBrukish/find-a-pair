@@ -1,0 +1,183 @@
+body {
+    height: 90vh;
+    background-color: rgb(144, 202, 216);
+}
+
+.main {
+    display: flex;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: aqua;
+}
+
+.size {
+    align-self: start;
+    display: inline-block;
+    width: 40%;
+    max-width: 100%;
+    padding: .6em 1.4em .5em .8em;
+    box-sizing: border-box;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    border: 1px solid #aaa;
+    box-shadow: 0 1px 0 1px rgba(0, 0, 0, .04);
+    border-radius: .5em;
+    background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+    font-size: 1.1em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 700;
+    line-height: 1.3;
+    color: #444;
+
+    option {
+        font-weight: normal;
+        width: 80%;
+    }
+}
+
+.play {
+    display: inline-block;
+    padding: .4em 1.5em;
+    box-shadow: 0px 1px 0px 0px #fff6af;
+    cursor: pointer;
+    outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffee66;
+    background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
+    background-color: #ffec64;
+    border-radius: 6px;
+    border: 1px solid #ffaa22;
+    color: #444;
+
+    &:hover {
+        background: linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+        background-color: #ffab23;
+    }
+
+    &:active {
+        position: relative;
+        top: 1px;
+    }
+
+}
+
+.wrapper {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    width: 640px;
+    height: 640px;
+    margin: auto;
+    background-color: rgb(6, 26, 49);
+    border-radius: 0.3em;
+    perspective: 1000px;
+
+
+    .card {
+        position: relative;
+        z-index: 1000;
+        width: 90%;
+        height: 90%;
+        box-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
+        border-radius: 10px;
+        background-color: rgb(230, 247, 241);
+        transform: scale(1);
+        transform-style: preserve-3d;
+        transition: transform 1s linear;
+
+        &:active {
+            transform: scale(0.97);
+            transition: transform .2s;
+        }
+
+        .front-face,
+        .back-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+            background: #1C7CCC;
+            backface-visibility: hidden;
+        }
+
+        .front-face {
+            transform: rotateY(180deg)
+        }
+
+        .back-face {
+            background-color: rgb(227, 255, 255);
+        }
+
+
+    }
+
+    .flip {
+        transform: rotateY(180deg);
+    }
+}
+
+.snowflake {
+    position: absolute; 
+    z-index: 0;
+    color: white; 
+    
+    &:after {
+      content: "\2744"; 
+    }
+}
+
+$snowflake: 100;
+
+@for $i from 1 through $snowflake {
+ 
+  $top: (random(10) + 10) * 1%;
+
+  $left: random((90)+5) * 1%;
+
+  $delay: random(20) - 1s;
+
+  $duration: random(30) + 4s;
+
+  $size: random(24);
+
+  .snowflake:nth-of-type(#{$i}) {
+    animation-name: snowflake-#{$i};
+    animation-delay: $delay;
+    animation-duration: $duration;
+    animation-iteration-count: infinite;
+    left: $left;
+    top: -$top;
+    &:after {
+      font-size: $size * 1px;
+    }
+  }
+  
+  @keyframes snowflake-#{$i} {
+    0% {
+      transform: rotate(0deg);
+      left: $left;
+      top: -$top;
+    }
+    25% {
+      left: $left + 1%;
+    }
+
+    50% {
+      left: $left;
+    }
+
+    75% {
+      left: $left + 2%;
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(360deg);
+      top: $top + 90%;
+      opacity: 0;
+    }
+  }
+}
